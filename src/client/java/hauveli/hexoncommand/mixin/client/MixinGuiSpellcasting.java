@@ -13,8 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 // import java.util.List;
 
 /**
- * This Mixin injects at the start of GuiSpellcasting.tick()
- * and prevents the GUI from being closed early if the player has the tag magical
+ * This Mixin injects on the closeForReal call in GuiSpellcasting.tick()
+ * and prevents the GUI from being closed early if the player has the tag hexoncommand:command_permission
  * Note: this sounds like it might be a really bad idea if player == null,
  * but I am checking for that, so unless multi-threaded race condition it is safe?
  * Side effect: When a player has the freecaster attribute, they do not mishap or cancel casts
@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Mixin(GuiSpellcasting.class)
 public abstract class MixinGuiSpellcasting {
-	@Inject(method = "tick", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "tick", at = @At("INVOKE"), target = "Lat/petrak/hexcasting/client/gui/GuiSpellcasting;closeForReal()V", cancellable = true)
 	private void injected(CallbackInfo ci) {
 		LocalPlayer player = Minecraft.getInstance().player;
 		if (player != null && player.getAttributeValue(HexOnCommandAttributes.COMMAND_PERMISSION) > 0) {
