@@ -22,8 +22,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Mixin(GuiSpellcasting.class)
 public abstract class MixinGuiSpellcasting {
-	@Inject(method = "tick", at = @At("INVOKE"), target = "Lat/petrak/hexcasting/client/gui/GuiSpellcasting;closeForReal()V", cancellable = true)
-	private void injected(CallbackInfo ci) {
+	@Inject(
+			method = "tick",
+			at = @At(
+					value = "INVOKE",
+					target = "Lat/petrak/hexcasting/client/gui/GuiSpellcasting;closeForReal()V"
+			),
+			cancellable = true
+	)	private void injected(CallbackInfo ci) {
 		LocalPlayer player = Minecraft.getInstance().player;
 		if (player != null && player.getAttributeValue(HexOnCommandAttributes.COMMAND_PERMISSION) > 0) {
 			ci.cancel();
