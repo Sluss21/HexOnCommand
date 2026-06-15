@@ -19,10 +19,12 @@ public abstract class FabricPlayerMixin extends LivingEntity {
         super(entityType, level);
     }
 
-    // Need to add after hecasting? not quite sure
-    @Inject(at = @At("RETURN"), method = "createAttributes")
+    @Inject(method = "createAttributes", at = @At("RETURN"), cancellable = true)
     private static void hex$addAttributes(CallbackInfoReturnable<AttributeSupplier.Builder> cir) {
-        var out = cir.getReturnValue();
+        AttributeSupplier.Builder out = cir.getReturnValue();
         out.add(HexOnCommandAttributes.COMMAND_PERMISSION);
+
+        // ⭐ REQUIRED: return the modified builder
+        cir.setReturnValue(out);
     }
 }
