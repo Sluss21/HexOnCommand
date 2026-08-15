@@ -48,6 +48,9 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 	modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
 
+	// Pulled from Maven (not a local jar) so its transitive deps — including Fiber,
+	// which was causing the NoClassDefFoundError crash — actually resolve.
+	modImplementation "vazkii.patchouli:Patchouli:1.21-87-FABRIC"
 
 	modImplementation files(
 			"libs/cardinal-components-api-6.1.3.jar",
@@ -56,10 +59,9 @@ dependencies {
 			"libs/cardinal-components-entity-6.1.3.jar",
 			"libs/cardinal-components-item-6.1.3.jar",
 			"libs/cloth-config-15.0.140-fabric.jar",
-			"libs/hexcasting-fabric-1.21.1-0.12.0-devel-pre-16.jar",
+			"libs/hexcasting-fabric-1.21.1-${project.hexcasting_version}.jar",
 			"libs/inline-fabric-1.21.1-1.2.2.jar",
 			"libs/paucal-0.7.1-pre-27+1.21.1-fabric.jar",
-			"libs/Patchouli-1.21.1-93-FABRIC.jar",
 			"libs/architectury-13.0.8-fabric.jar"
 	)
 }

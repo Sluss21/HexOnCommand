@@ -44,8 +44,6 @@ class HexOnCommand : ModInitializer {
 	}
 
 	override fun onInitialize() {
-		// Register the attribute ONLY — mixin handles adding it to Player
-
 		CommandRegistrationCallback.EVENT.register { dispatcher, _, _ ->
 			dispatcher.register(
 				literal("hexcastinggui").executes { context ->
