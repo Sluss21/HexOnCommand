@@ -1,5 +1,6 @@
 package hauveli.hexoncommand
 
+import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.common.lib.HexAttributes
 import at.petrak.hexcasting.common.lib.HexSounds
 import at.petrak.hexcasting.common.msgs.MsgClearSpiralPatternsS2C
@@ -10,7 +11,6 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.minecraft.commands.Commands.literal
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
-import net.minecraft.nbt.CompoundTag
 
 class HexOnCommand : ModInitializer {
 
@@ -22,7 +22,7 @@ class HexOnCommand : ModInitializer {
 
 		if (player.isShiftKeyDown) {
 			if (level.isClientSide) {
-				player.playSound(HexSounds.STAFF_RESET, 1f, 1f)
+				player.playSound(HexSounds.STAFF_RESET.value(), 1f, 1f)
 			}
 			IXplatAbstractions.INSTANCE.clearCastingData(player)
 			val packet = MsgClearSpiralPatternsS2C(player.uuid)
@@ -34,7 +34,7 @@ class HexOnCommand : ModInitializer {
 			val vm = IXplatAbstractions.INSTANCE.getStaffcastVM(player, hand)
 			val patterns = IXplatAbstractions.INSTANCE.getPatternsSavedInUi(player)
 			val stack = vm.image.stack
-			val ravenmind: CompoundTag? = vm.image.ravenmind().orElse(null)
+			val ravenmind: Iota? = vm.image.ravenmind().orElse(null)
 
 			IXplatAbstractions.INSTANCE.sendPacketToPlayer(
 				player,
